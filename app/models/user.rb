@@ -4,7 +4,7 @@ class User < ApplicationRecord
   belongs_to :department
 
   validates_presence_of :first_name, :last_name, :phone, :address,
-                        :email, :salary, :bonus
+                        :email, :salary, :bonus, :role
   validates :phone, length: { is: 10 }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, length: { minimum: 8 }
@@ -14,4 +14,9 @@ class User < ApplicationRecord
   def format_phone_number
     phone.gsub!(/\D/, '')
   end
+
+  enum role: {
+    employee:      10,
+    administrator: 20
+  }
 end

@@ -17,7 +17,8 @@ software_department.users.create!(
   phone:      '1234567890',
   address:    '1 Infinite Loop',
   salary:     1_000_000,
-  bonus:      1_000_000
+  bonus:      1_000_000,
+  role:       :administrator
 )
 software_department.users.create!(
   email:      'tcook@apple.com',
@@ -27,7 +28,8 @@ software_department.users.create!(
   phone:      '1234567890',
   address:    '2 Infinite Loop',
   salary:     1_000_000,
-  bonus:      100_000
+  bonus:      100_000,
+  role:       :administrator
 )
 software_department.users.create!(
   email:      'cintern@apple.com',
@@ -37,5 +39,6 @@ software_department.users.create!(
   phone:      '1234567890',
   address:    '3 Infinite Loop',
   salary:     10_000,
-  bonus:      0
+  bonus:      0,
+  role:       :employee
 )
