@@ -1,0 +1,13 @@
+<%= link_to 'Employee Profile', current_user %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Company Profile</h1>
+<br>
+
+<p>
+  <strong>Name:</strong>
+  <%= @company.name %>
+</p>
+
+<%= link_to 'Edit Company', edit_company_path(@company) %>
