@@ -41,6 +41,8 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rspec-rails', '~> 3.4'
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
