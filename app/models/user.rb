@@ -12,7 +12,7 @@ class User < ApplicationRecord
   before_validation :format_phone_number
 
   def format_phone_number
-    phone.gsub!(/\D/, '')
+    phone&.gsub!(/\D/, '')
   end
 
   enum role: {
