@@ -3,5 +3,8 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create] do
     delete :sign_out, on: :collection
   end
+
+  resources :users, only: [:show, :edit, :update]
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
