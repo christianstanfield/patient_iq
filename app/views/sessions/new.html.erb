@@ -1,0 +1,9 @@
+<h1>Login</h1>
+
+<% @users.each do |user| %>
+  <%= form_tag sessions_path, method: :post do %>
+    <%= hidden_field_tag :user_id, user.id %>
+    <%= submit_tag user.full_name %>
+  <% end %>
+  <br>
+<% end %>
