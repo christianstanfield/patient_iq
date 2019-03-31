@@ -11,3 +11,59 @@
 </p>
 
 <%= link_to 'Edit Company', edit_company_path(@company) %>
+
+<p><strong>Top Earning Employees:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Department</th>
+      <th>Name</th>
+      <th>Top Salaries</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @company.top_employees.each do |department_user| %>
+      <% user = User.new first_name: department_user.first_name, last_name: department_user.last_name, salary: department_user.salary %>
+      <tr>
+        <td><%= department_user.name %></td>
+        <td><%= user.full_name %></td>
+        <td><%= number_to_currency user.salary, precision: 0 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><strong>All Employees:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Department</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Salary</th>
+      <th>Bonus</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @company.users.order(:last_name).each do |user| %>
+      <tr>
+        <td><%= user.department.name %></td>
+        <td><%= user.full_name %></td>
+        <td><%= user.email %></td>
+        <td><%= number_to_phone user.phone %></td>
+        <td><%= user.address %></td>
+        <td><%= number_to_currency user.salary, precision: 0 %></td>
+        <td><%= number_to_currency user.bonus, precision: 0 %></td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
