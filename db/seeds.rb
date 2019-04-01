@@ -42,3 +42,6 @@ software_department.users.create!(
   bonus:      0,
   role:       :employee
 )
+
+5.times { FactoryBot.create :user, department: software_department }
+5.times { FactoryBot.create :user, department: hardware_department }

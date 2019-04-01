@@ -1,0 +1,48 @@
+<%= link_to 'Company Profile', company_path(@user.company) %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Employee Profile</h1>
+<br>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.full_name %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @user.role.humanize %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @user.department.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= number_to_phone @user.phone %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @user.address %>
+</p>
+
+<p>
+  <strong>Salary:</strong>
+  <%= number_to_currency @user.salary, precision: 0 %>
+</p>
+
+<p>
+  <strong>Bonus:</strong>
+  <%= number_to_currency @user.bonus, precision: 0 %>
+</p>
+
+<%= link_to 'Edit Profile', edit_user_path(@user) %>
