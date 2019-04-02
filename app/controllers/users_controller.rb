@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    permitted_params = [:role, :department_id, :phone, :address, :email, :salary, :bonus]
+    permitted_params = [:department_id, :phone, :address, :email, :salary, :bonus]
 
     if params[:user][:password].present?
       permitted_params += [:password, :password_confirmation]

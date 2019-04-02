@@ -11,20 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name, disabled: true %>
-  </div>
+  <p>
+    <strong>Name:</strong>
+    <%= @user.full_name %>
+  </p>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name, disabled: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :role %>
-    <%= form.select :role, User.roles.map { |name, value| [name.humanize, name] } %>
-  </div>
+  <p>
+    <strong>Role:</strong>
+    <%= @user.role.humanize %>
+  </p>
 
   <div class="field">
     <%= form.label :department_id %>
