@@ -1,3 +1,5 @@
+<% permitted_attributes = policy(user).permitted_attributes %>
+
 <%= form_with(model: user, local: true) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
@@ -21,45 +23,91 @@
     <%= @user.role.humanize %>
   </p>
 
-  <div class="field">
-    <%= form.label :department_id %>
-    <%= form.select :department_id, user.company.departments.map { |department| [department.name, department.id] } %>
-  </div>
+  <% if permitted_attributes.include?(:department_id) %>
+    <div class="field">
+      <%= form.label :department_id %>
+      <%= form.select :department_id, user.company.departments.map { |department| [department.name, department.id] } %>
+    </div>
+  <% else %>
+    <p>
+      <strong>Department:</strong>
+      <%= @user.department.name %>
+    </p>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.text_field :phone %>
-  </div>
+  <% if permitted_attributes.include?(:phone) %>
+    <div class="field">
+      <%= form.label :phone %>
+      <%= form.text_field :phone %>
+    </div>
+  <% else %>
+    <p>
+      <strong>Phone:</strong>
+      <%= number_to_phone @user.phone %>
+    </p>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_area :address %>
-  </div>
+  <% if permitted_attributes.include?(:address) %>
+    <div class="field">
+      <%= form.label :address %>
+      <%= form.text_area :address %>
+    </div>
+  <% else %>
+    <p>
+      <strong>Phone:</strong>
+      <%= number_to_phone @user.phone %>
+    </p>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
+  <% if permitted_attributes.include?(:email) %>
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.text_field :email %>
+    </div>
+  <% else %>
+    <p>
+      <strong>Email:</strong>
+      <%= @user.email %>
+    </p>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
+  <% if permitted_attributes.include?(:password) %>
+    <div class="field">
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+    </div>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
-  </div>
+  <% if permitted_attributes.include?(:password_confirmation) %>
+    <div class="field">
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation %>
+    </div>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :salary %>
-    <%= form.number_field :salary %>
-  </div>
+  <% if permitted_attributes.include?(:salary) %>
+    <div class="field">
+      <%= form.label :salary %>
+      <%= form.number_field :salary %>
+    </div>
+  <% else %>
+    <p>
+      <strong>Salary:</strong>
+      <%= number_to_currency @user.salary, precision: 0 %>
+    </p>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :bonus %>
-    <%= form.number_field :bonus %>
-  </div>
+  <% if permitted_attributes.include?(:bonus) %>
+    <div class="field">
+      <%= form.label :bonus %>
+      <%= form.number_field :bonus %>
+    </div>
+  <% else %>
+    <p>
+      <strong>Bonus:</strong>
+      <%= number_to_currency @user.bonus, precision: 0 %>
+    </p>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>

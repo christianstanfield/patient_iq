@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :department do
     association :company
-    name { Faker::Company.profession }
+    sequence(:name) { |n| "#{Faker::Company.profession} #{n}" }
   end
 end
