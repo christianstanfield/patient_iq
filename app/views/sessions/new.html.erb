@@ -1,9 +1,14 @@
 <h1>Login</h1>
+<br>
 
-<% @users.each do |user| %>
-  <%= form_tag sessions_path, method: :post do %>
-    <%= hidden_field_tag :user_id, user.id %>
-    <%= submit_tag user.full_name %>
+<% @users.each do |company_name, users| %>
+  <h2><%= company_name %></h2>
+
+  <% users.each do |user| %>
+    <%= form_tag sessions_path, method: :post do %>
+      <%= hidden_field_tag :user_id, user.id %>
+      <%= submit_tag "#{user.full_name} (#{user.role.humanize})" %>
+    <% end %>
+    <br>
   <% end %>
-  <br>
 <% end %>
