@@ -1,11 +1,14 @@
 class ApplicationPolicy
 
-  attr_reader :user, :record
+  attr_reader :user, :record, :users_company
 
   def initialize(user, record)
     raise Pundit::NotAuthorizedError, 'must be logged in' unless user
-    @user   = user
-    @record = record
+    @user          = user
+    @record        = record
+    @users_company = user.company
+
+    raise Pundit::NotAuthorizedError unless record_belongs_to_users_company?
   end
 
   def index?
@@ -37,7 +40,7 @@ class ApplicationPolicy
   end
 
   class Scope
-    
+
     attr_reader :user, :scope
 
     def initialize(user, scope)
