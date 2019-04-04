@@ -28,6 +28,10 @@ class UserPolicy < ApplicationPolicy
 
   private
 
+  def record_belongs_to_users_company?
+    record.company == users_company
+  end
+
   def is_own_profile?
     user == record
   end

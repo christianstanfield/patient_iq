@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "users/edit", type: :view do
-  let(:employee)      { FactoryBot.create :user }
-  let(:administrator) { FactoryBot.create :user, :administrator }
+  let(:department)    { FactoryBot.create :department }
+  let(:administrator) { FactoryBot.create :user, :administrator, department: department }
+  let(:employee)      { FactoryBot.create :user, department: department }
   before(:each) do
     @user = assign(:user, record)
     session[:current_user_id] = current_user.id
@@ -74,7 +75,7 @@ RSpec.describe "users/edit", type: :view do
       end
     end
 
-    context 'when record belongs to another user' do
+    context 'when record belongs to another user on the same company' do
       let(:record) { employee }
 
       it 'renders the correct attributes' do

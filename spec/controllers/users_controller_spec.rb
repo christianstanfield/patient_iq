@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let(:employee)      { FactoryBot.create :user }
-  let(:administrator) { FactoryBot.create :user, :administrator }
+  let(:department)    { FactoryBot.create :department }
+  let(:administrator) { FactoryBot.create :user, :administrator, department: department }
+  let(:employee)      { FactoryBot.create :user, department: department }
+  let(:alt_employee)  { FactoryBot.create :user }
   let(:valid_session) { { current_user_id: current_user.id } }
 
   describe "PUT #update" do
@@ -28,8 +30,22 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { administrator }
+
+          it 'should not update record' do
+            record.update! phone: existing_phone
+            expect(record.phone).to_not eq(new_phone)
+
+            params = { id: record.id, user: { phone: new_phone } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.phone).to eq(existing_phone)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
 
           it 'should not update record' do
             record.update! phone: existing_phone
@@ -60,7 +76,7 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { employee }
 
           it 'should successfully update record' do
@@ -71,6 +87,20 @@ RSpec.describe UsersController, type: :controller do
             put :update, params: params, session: valid_session
             record.reload
             expect(record.phone).to eq(new_phone)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
+
+          it 'should not update record' do
+            record.update! phone: existing_phone
+            expect(record.phone).to_not eq(new_phone)
+
+            params = { id: record.id, user: { phone: new_phone } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.phone).to eq(existing_phone)
           end
         end
       end
@@ -97,8 +127,22 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { administrator }
+
+          it 'should not update record' do
+            record.update! address: existing_address
+            expect(record.address).to_not eq(new_address)
+
+            params = { id: record.id, user: { address: new_address } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.address).to eq(existing_address)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
 
           it 'should not update record' do
             record.update! address: existing_address
@@ -129,7 +173,7 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { employee }
 
           it 'should successfully update record' do
@@ -140,6 +184,20 @@ RSpec.describe UsersController, type: :controller do
             put :update, params: params, session: valid_session
             record.reload
             expect(record.address).to eq(new_address)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
+
+          it 'should not update record' do
+            record.update! address: existing_address
+            expect(record.address).to_not eq(new_address)
+
+            params = { id: record.id, user: { address: new_address } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.address).to eq(existing_address)
           end
         end
       end
@@ -166,8 +224,22 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { administrator }
+
+          it 'should not update record' do
+            record.update! email: existing_email
+            expect(record.email).to_not eq(new_email)
+
+            params = { id: record.id, user: { email: new_email } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.email).to eq(existing_email)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
 
           it 'should not update record' do
             record.update! email: existing_email
@@ -198,7 +270,7 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { employee }
 
           it 'should successfully update record' do
@@ -209,6 +281,20 @@ RSpec.describe UsersController, type: :controller do
             put :update, params: params, session: valid_session
             record.reload
             expect(record.email).to eq(new_email)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
+
+          it 'should not update record' do
+            record.update! email: existing_email
+            expect(record.email).to_not eq(new_email)
+
+            params = { id: record.id, user: { email: new_email } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.email).to eq(existing_email)
           end
         end
       end
@@ -235,8 +321,22 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { administrator }
+
+          it 'should not update record' do
+            record.update! salary: existing_salary
+            expect(record.salary).to_not eq(new_salary)
+
+            params = { id: record.id, user: { salary: new_salary } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.salary).to eq(existing_salary)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
 
           it 'should not update record' do
             record.update! salary: existing_salary
@@ -267,7 +367,7 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { employee }
 
           it 'should successfully update record' do
@@ -278,6 +378,20 @@ RSpec.describe UsersController, type: :controller do
             put :update, params: params, session: valid_session
             record.reload
             expect(record.salary).to eq(new_salary)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
+
+          it 'should not update record' do
+            record.update! salary: existing_salary
+            expect(record.salary).to_not eq(new_salary)
+
+            params = { id: record.id, user: { salary: new_salary } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.salary).to eq(existing_salary)
           end
         end
       end
@@ -304,8 +418,22 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { administrator }
+
+          it 'should not update record' do
+            record.update! bonus: existing_bonus
+            expect(record.bonus).to_not eq(new_bonus)
+
+            params = { id: record.id, user: { bonus: new_bonus } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.bonus).to eq(existing_bonus)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
 
           it 'should not update record' do
             record.update! bonus: existing_bonus
@@ -336,7 +464,7 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { employee }
 
           it 'should successfully update record' do
@@ -349,10 +477,24 @@ RSpec.describe UsersController, type: :controller do
             expect(record.bonus).to eq(new_bonus)
           end
         end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
+
+          it 'should not update record' do
+            record.update! bonus: existing_bonus
+            expect(record.bonus).to_not eq(new_bonus)
+
+            params = { id: record.id, user: { bonus: new_bonus } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.bonus).to eq(existing_bonus)
+          end
+        end
       end
     end
 
-    context 'when updating department' do
+    context 'when updating department' do # when department belongs to another company?
       let(:existing_department_id) { record.department.id }
       let(:new_department_id) do
         FactoryBot.create(:department, company: record.company).id
@@ -375,8 +517,22 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { administrator }
+
+          it 'should not update record' do
+            record.update! department_id: existing_department_id
+            expect(record.department_id).to_not eq(new_department_id)
+
+            params = { id: record.id, user: { department_id: new_department_id } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.department_id).to eq(existing_department_id)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
 
           it 'should not update record' do
             record.update! department_id: existing_department_id
@@ -407,7 +563,7 @@ RSpec.describe UsersController, type: :controller do
           end
         end
 
-        context 'when record belongs to another user' do
+        context 'when record belongs to another user on the same company' do
           let(:record) { employee }
 
           it 'should successfully update record' do
@@ -418,6 +574,20 @@ RSpec.describe UsersController, type: :controller do
             put :update, params: params, session: valid_session
             record.reload
             expect(record.department_id).to eq(new_department_id)
+          end
+        end
+
+        context 'when record belongs to another user from another company' do
+          let(:record) { alt_employee }
+
+          it 'should not update record' do
+            record.update! department_id: existing_department_id
+            expect(record.department_id).to_not eq(new_department_id)
+
+            params = { id: record.id, user: { department_id: new_department_id } }
+            put :update, params: params, session: valid_session
+            record.reload
+            expect(record.department_id).to eq(existing_department_id)
           end
         end
       end
@@ -573,8 +743,17 @@ RSpec.describe UsersController, type: :controller do
         end
       end
 
-      context 'when record belongs to another user' do
+      context 'when record belongs to another user on the same company' do
         let(:record) { administrator }
+
+        it 'should return a 404' do
+          get :show, params: { id: record.id }, session: valid_session
+          expect(response).to be_not_found
+        end
+      end
+
+      context 'when record belongs to another user from another company' do
+        let(:record) { alt_employee }
 
         it 'should return a 404' do
           get :show, params: { id: record.id }, session: valid_session
@@ -596,13 +775,22 @@ RSpec.describe UsersController, type: :controller do
         end
       end
 
-      context 'when record belongs to another user' do
+      context 'when record belongs to another user on the same company' do
         let(:record) { employee }
 
         it 'should render show page' do
           get :show, params: { id: record.id }, session: valid_session
           expect(response).to be_successful
           expect(response).to render_template :show
+        end
+      end
+
+      context 'when record belongs to another user from another company' do
+        let(:record) { alt_employee }
+
+        it 'should return a 404' do
+          get :show, params: { id: record.id }, session: valid_session
+          expect(response).to be_not_found
         end
       end
     end
@@ -623,8 +811,17 @@ RSpec.describe UsersController, type: :controller do
         end
       end
 
-      context 'when record belongs to another user' do
+      context 'when record belongs to another user on the same company' do
         let(:record) { administrator }
+
+        it 'should return a 404' do
+          get :edit, params: { id: record.id }, session: valid_session
+          expect(response).to be_not_found
+        end
+      end
+
+      context 'when record belongs to another user from another company' do
+        let(:record) { alt_employee }
 
         it 'should return a 404' do
           get :edit, params: { id: record.id }, session: valid_session
@@ -646,13 +843,22 @@ RSpec.describe UsersController, type: :controller do
         end
       end
 
-      context 'when record belongs to another user' do
+      context 'when record belongs to another user on the same company' do
         let(:record) { employee }
 
         it 'should render edit page' do
           get :edit, params: { id: record.id }, session: valid_session
           expect(response).to be_successful
           expect(response).to render_template :edit
+        end
+      end
+
+      context 'when record belongs to another user from another company' do
+        let(:record) { alt_employee }
+
+        it 'should return a 404' do
+          get :edit, params: { id: record.id }, session: valid_session
+          expect(response).to be_not_found
         end
       end
     end
