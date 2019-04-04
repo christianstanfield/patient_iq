@@ -1,4 +1,6 @@
-<%= link_to 'Company Profile', company_path(@user.company) %>
+<% if policy(@user.company).show? %>
+  <%= link_to 'Company Profile', company_path(@user.company) %>
+<% end %>
 
 <p id="notice"><%= notice %></p>
 
