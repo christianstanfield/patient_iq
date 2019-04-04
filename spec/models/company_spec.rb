@@ -66,4 +66,37 @@ RSpec.describe Company, type: :model do
       end
     end
   end
+
+  describe '#top_employees' do
+    let(:company)     { FactoryBot.create :company }
+    let(:department1) { FactoryBot.create :department, company: company, name: 'dept1' }
+    let(:department2) { FactoryBot.create :department, company: company, name: 'dept2' }
+
+    let(:alt_company)    { FactoryBot.create :company }
+    let(:alt_department) { FactoryBot.create :department, company: alt_company }
+    let(:alt_user)       { FactoryBot.create :user, department: alt_department, salary: 100_000 }
+
+    before(:each) do
+      4.times { |i| FactoryBot.create :user, department: department1, salary: 1_000 + i }
+      4.times { |i| FactoryBot.create :user, department: department2, salary: 2_000 + i }
+      expect(alt_user.company).to_not eq(company)
+      expect(User.count).to eq(9)
+      expect(User.order(salary: :desc).first).to eq(alt_user)
+    end
+
+    it 'should return the top 3 employees by salary per department' do
+      top_employees = company.top_employees
+      expect(top_employees.length).to eq(6)
+
+      first_dept = top_employees.first(3)
+      expect(first_dept.map(&:name).uniq).to eq(['dept1'])
+      expect(first_dept.map(&:salary)).to eq([1_003, 1_002, 1_001])
+      expect(User.find_by department: department1, salary: 1_000).to be_present
+
+      second_dept = top_employees.last(3)
+      expect(second_dept.map(&:name).uniq).to eq(['dept2'])
+      expect(second_dept.map(&:salary)).to eq([2_003, 2_002, 2_001])
+      expect(User.find_by department: department2, salary: 2_000).to be_present
+    end
+  end
 end
