@@ -1,5 +1,7 @@
 class Company < ApplicationRecord
-
+  audited
+  has_associated_audits
+  
   has_many :departments, dependent: :destroy
   has_many :users, through: :departments
 

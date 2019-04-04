@@ -45,6 +45,8 @@ GEM
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
     arel (9.0.0)
+    audited (4.8.0)
+      activerecord (>= 4.0, < 5.3)
     bcrypt (3.1.12)
     bindex (0.6.0)
     builder (3.2.3)
@@ -224,6 +226,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  audited
   bcrypt (~> 3.1.7)
   byebug
   capybara (~> 2.13)
