@@ -19,15 +19,17 @@ class UsersController < ApplicationController
 
   def load_resource
     @user = User.find_by id: params[:id]
+    authorize @user
   end
 
   def user_params
-    permitted_params = [:role, :department_id, :phone, :address, :email, :salary, :bonus]
+    permitted_params = permitted_attributes @user
 
-    if params[:user][:password].present?
-      permitted_params += [:password, :password_confirmation]
+    unless params[:user][:password].present?
+      permitted_params.delete(:password)
+      permitted_params.delete(:password_confirmation)
     end
 
-    params.require(:user).permit(permitted_params)
+    permitted_params
   end
 end

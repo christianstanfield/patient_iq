@@ -9,8 +9,10 @@
   </head>
 
   <body>
-    <%= form_tag sign_out_sessions_path, method: :delete do %>
-      <%= submit_tag 'Logout' %>
+    <% if current_user && !response.not_found? %>
+      <%= form_tag sign_out_sessions_path, method: :delete do %>
+        <%= submit_tag 'Logout' %>
+      <% end %>
     <% end %>
 
     <%= yield %>

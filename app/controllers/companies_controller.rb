@@ -8,7 +8,7 @@ class CompaniesController < ApplicationController
   end
 
   def update
-    if @company.update company_params
+    if @company.update permitted_attributes(@company)
       redirect_to @company, notice: 'Company updated successfully'
     else
       render :edit
@@ -19,9 +19,6 @@ class CompaniesController < ApplicationController
 
   def load_resource
     @company = Company.find_by id: params[:id]
-  end
-
-  def company_params
-    params.require(:company).permit(:name)
+    authorize @company
   end
 end

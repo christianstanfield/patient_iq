@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  audited associated_with: :company
 
   belongs_to :department
   delegate :company, to: :department

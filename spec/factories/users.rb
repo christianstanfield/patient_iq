@@ -10,5 +10,9 @@ FactoryBot.define do
     salary     { Faker::Number.number(5) }
     bonus      { Faker::Number.number(4) }
     role       { :employee }
+
+    trait :administrator do
+      role { :administrator }
+    end
   end
 end

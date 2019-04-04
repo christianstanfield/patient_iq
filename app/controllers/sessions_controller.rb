@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
 
   def new
-    @users = User.all
+    @users = User.joins(department: :company)
+      .order('companies.name, users.role desc')
+      .group_by { |user| user.company.name }
   end
 
   def create
