@@ -760,6 +760,15 @@ RSpec.describe UsersController, type: :controller do
           expect(response).to be_not_found
         end
       end
+
+      context 'when requested user does not exist' do
+
+        it 'should return a 404' do
+          expect(current_user.id).to_not eq(0)
+          get :show, params: { id: 0 }, session: valid_session
+          expect(response).to be_not_found
+        end
+      end
     end
 
     context 'when user is an administrator' do
@@ -790,6 +799,15 @@ RSpec.describe UsersController, type: :controller do
 
         it 'should return a 404' do
           get :show, params: { id: record.id }, session: valid_session
+          expect(response).to be_not_found
+        end
+      end
+
+      context 'when requested user does not exist' do
+
+        it 'should return a 404' do
+          expect(current_user.id).to_not eq(0)
+          get :show, params: { id: 0 }, session: valid_session
           expect(response).to be_not_found
         end
       end
@@ -828,6 +846,15 @@ RSpec.describe UsersController, type: :controller do
           expect(response).to be_not_found
         end
       end
+
+      context 'when requested user does not exist' do
+
+        it 'should return a 404' do
+          expect(current_user.id).to_not eq(0)
+          get :edit, params: { id: 0 }, session: valid_session
+          expect(response).to be_not_found
+        end
+      end
     end
 
     context 'when user is an administrator' do
@@ -858,6 +885,15 @@ RSpec.describe UsersController, type: :controller do
 
         it 'should return a 404' do
           get :edit, params: { id: record.id }, session: valid_session
+          expect(response).to be_not_found
+        end
+      end
+
+      context 'when requested user does not exist' do
+
+        it 'should return a 404' do
+          expect(current_user.id).to_not eq(0)
+          get :edit, params: { id: 0 }, session: valid_session
           expect(response).to be_not_found
         end
       end
